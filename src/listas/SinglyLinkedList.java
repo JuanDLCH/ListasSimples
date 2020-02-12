@@ -42,7 +42,7 @@ public class SinglyLinkedList<T extends Number & Comparable> implements Ilist<T>
          */
 
         Node<T> newNode = new Node<>(d);
-        if (isEmpty() || d.compareTo(this.head.getData()) == -1) {
+        if (isEmpty() || d.compareTo(this.head.getData()) == 1) {
             newNode.setNextNode(this.head);
             this.head = newNode;
         } else {
@@ -57,7 +57,7 @@ public class SinglyLinkedList<T extends Number & Comparable> implements Ilist<T>
              */
             Node<T> current = this.head;//
             while (current.getNextNode() != null
-                    && d.compareTo(current.getNextNode().getData()) == 1) {
+                    && d.compareTo(current.getNextNode().getData()) == -1) {
                 current = current.getNextNode();
             }
             /*
@@ -148,7 +148,9 @@ public class SinglyLinkedList<T extends Number & Comparable> implements Ilist<T>
         Node<T> current = this.head;
         while(current != null){
             if(current.getData() == num){
+                return true;
             }
+            current = current.getNextNode();
         }
         return false;
     }
@@ -189,6 +191,59 @@ public class SinglyLinkedList<T extends Number & Comparable> implements Ilist<T>
             current.setNextNode(null);
         }
 
+    }
+    
+    public void delete(T num) throws Exception {
+        Node<T> current = this.head;
+        if (current.getData() == num) {
+            this.head = current.getNextNode();
+        } else {
+            while (current.getNextNode().getData() != num) {
+                current = current.getNextNode();
+            }
+            current.setNextNode(current.getNextNode().getNextNode());
+        }
+    }
+    
+    public void anadirDelante(T numA, T numD) throws Exception{
+        Node<T> current = this.head;
+        Node<T> newNode = new Node<>(numD);
+        if (isEmpty()) {
+            add(numD);
+        }
+        while (current.getData() != numA) {
+            current = current.getNextNode();
+        }
+        current.setNextNode(newNode);
+        newNode.setNextNode(current.getNextNode().getNextNode());
+    }
+    
+    public void modificarNodo(T nNuevo, T nViejo){
+        Node<T> current = this.head;
+        while (current.getData() != nViejo) {
+            current = current.getNextNode();
+        }
+        current.setData(nNuevo);
+    }
+    
+    public Boolean equals(SinglyLinkedList<T> Lista2){
+        Node<T> current = this.head;
+        Node<T> contemporary = this.head;
+        if (Lista2.isEmpty() || this.isEmpty()) {
+            return false;
+        }
+        if (Lista2.count() != this.count()) {
+            return false;
+        }
+        while (current.getData() != contemporary.getData()) {
+
+            if (current.getData() != contemporary.getData()) {
+                return false;
+            }
+            current.getNextNode();
+            contemporary.getNextNode();
+        }
+        return true;
     }
 
 }
